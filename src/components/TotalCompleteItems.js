@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 const TotalCompleteItems = () => {
     const completed = useSelector((state) =>
-        state.todos.filter((todo) => todo.completed === true)
+        state.todos.todoListItems.filter((todo) => todo.completed === true)
     );
 
     return <h4 className="mt-3">Total Complete Items: {completed.length}</h4>;
