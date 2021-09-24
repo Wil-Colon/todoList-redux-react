@@ -4,17 +4,23 @@ import { addTodoAsync } from '../redux/todoSlice';
 
 const AddTodoForm = () => {
     const [value, setValue] = useState('');
+    const [todoFormEmpty, setTodoFormEmpty] = useState('');
 
     const dispatch = useDispatch();
 
     const onSubmit = (event) => {
         event.preventDefault();
-        dispatch(
-            addTodoAsync({
-                title: value,
-            })
-        );
-        setValue('');
+        if (value === '') {
+            setTodoFormEmpty(true);
+        } else {
+            setTodoFormEmpty(false);
+            dispatch(
+                addTodoAsync({
+                    title: value,
+                })
+            );
+            setValue('');
+        }
     };
 
     return (
@@ -22,10 +28,15 @@ const AddTodoForm = () => {
             <label className="sr-only">Name</label>
             <input
                 type="text"
-                className="form-control mb-2 mr-sm-2"
+                className={`form-control mb-2 mr-sm-2 ${
+                    todoFormEmpty && 'is-invalid'
+                }`}
                 placeholder="Add todo..."
                 value={value}
-                onChange={(event) => setValue(event.target.value)}
+                onChange={(event) => {
+                    setValue(event.target.value);
+                    setTodoFormEmpty(false);
+                }}
             ></input>
 
             <button type="submit" className="btn btn-primary mb-2">

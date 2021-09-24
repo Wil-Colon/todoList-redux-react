@@ -11,8 +11,6 @@ const TodoList = () => {
 
     const todos = useSelector((state) => state.todos.todoListItems);
 
-    console.log(loadStatus);
-
     //////Normal code/////
 
     // useEffect(() => {
@@ -34,11 +32,13 @@ const TodoList = () => {
 
     if (loadStatus === 'pending') {
         content = <CircularIndeterminate />;
+    } else if (todos.length === 0) {
+        content = <h4>Your todo list is empty</h4>;
     } else if (loadStatus === 'complete') {
         content = todos.map((todo, index) => (
             <TodoItem
                 key={index}
-                id={todo.id}
+                id={todo._id}
                 title={todo.title}
                 completed={todo.completed}
             />
